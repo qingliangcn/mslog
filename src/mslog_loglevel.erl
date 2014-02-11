@@ -11,7 +11,7 @@
 
 -include("mslog.hrl").
 
--define(LOGMODULE, "mslog_logger").
+-define(LOGMODULE, "mslog_logger_dyn").
 
 %% Error levels:
 -define(LOG_LEVELS,[ {0, no_log, "No log"}
@@ -77,7 +77,7 @@ level_to_integer(Level) ->
 %% very efficient code.
 mslog_logger_src(Loglevel) ->
     L = integer_to_list(Loglevel),
-    "-module(mslog_logger).
+    "-module(mslog_logger_dyn).
 
     -export([
 			debug_msg/5,
