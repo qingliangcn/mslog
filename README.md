@@ -29,8 +29,10 @@ log file to /data/logs/test_year_month_day.log
 
 * write log:
 
+Macros:
 
     ?ERROR_MSG(Format, Args);
+    
     ?DEBUG(Format, Args);
     ?DEV(Format, Args);
     ?WARNING_MSG(Format, Args);
