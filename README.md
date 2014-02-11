@@ -21,17 +21,18 @@ or
 
 ## How to init
 
-just call mslog_app:set_params/3 or mslog_app:set_params/4
+just call mslog:set/2, mslog:set/3 or mslog:set/4
 
 for example:
 
 log file to /data/logs/test.log
 
-    mslog_app:set_params(error, "/data/logs/", test).
+    mslog:set(error, "/data/logs/", test).
+    mslog:set("/data/logs/", test). %% default log level : error
 
 log file to /data/logs/test_year_month_day.log
 
-    mslog_app:set_params(error, "/data/logs/", test, true).
+    mslog:set(error, "/data/logs/", test, true).
 
 ## log levels
 
