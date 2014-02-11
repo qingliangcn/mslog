@@ -12,7 +12,7 @@ How to use
 
 Add mslog to your rebar.config or just clone it directly
 
-    {deps, [{node_package, ".*", {git, "git://github.com/qingliangcn/mslog.git", master}}]}.
+    {deps, [{mslog, ".*", {git, "git://github.com/qingliangcn/mslog.git", master}}]}.
     
 or
 
