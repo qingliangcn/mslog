@@ -27,8 +27,8 @@ set_param(ErrorLogLevel, BaseDir, FileBaseName) ->
 
 %% @param IsMf 是否按照日期分为多个日志文件
 set_param(ErrorLogLevel, BaseDir, FileBaseName, IsMf) ->
-    application:ensure_started(sasl),
-    application:ensure_started(mslog),
+    application:start(sasl),
+    application:start(mslog),
     mslog_loglevel:set(ErrorLogLevel),
     {ok, _} = mslog_logger:start(mslog_sup, [BaseDir, FileBaseName, IsMf]),
     ok.
