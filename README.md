@@ -34,10 +34,16 @@ Macros:
     ?ERROR_MSG(Format, Args);
     
     ?DEBUG(Format, Args);
+    
     ?DEV(Format, Args);
+    
     ?WARNING_MSG(Format, Args);
+    
     ?CRITICAL_MSG(Format, Args);
+    
     ?INFO_MSG(Format, Args);
+    
+Module funcs: (todo)
 
 
 * notice: the mslog app also log the sasl logs.
