@@ -5,7 +5,8 @@ a simple and easy to use erlang log app
 
 一个简单易用的erlang 日志 app
 
-***How to use ***
+How to use
+------
 
 1. Add mslog to your rebar.config or just clone it directly
 
@@ -17,27 +18,27 @@ for example:
 
 log file to /data/logs/test.log
 
-mslog_app:set_params(error, "/data/logs/", test).
+    mslog_app:set_params(error, "/data/logs/", test).
 
 log file to /data/logs/test_year_month_day.log
 
-mslog_app:set_params(error, "/data/logs/", test, true).
+    mslog_app:set_params(error, "/data/logs/", test, true).
 
 3. log levels: no_log/critical/error/warning/info/debug/dev
 
 4. write log:
 
-?ERROR_MSG(Format, Args);
+    ?ERROR_MSG(Format, Args);
 
-?DEBUG(Format, Args);
+    ?DEBUG(Format, Args);
 
-?DEV(Format, Args);
+    ?DEV(Format, Args);
 
-?WARNING_MSG(Format, Args);
+    ?WARNING_MSG(Format, Args);
 
-?CRITICAL_MSG(Format, Args);
+    ?CRITICAL_MSG(Format, Args);
 
-?INFO_MSG(Format, Args);
+    ?INFO_MSG(Format, Args);
 
 5. notice: the mslog app also log the sasl logs.
 
