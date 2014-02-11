@@ -134,7 +134,7 @@ do_flush_message(N) ->
     do_flush_message(N-1).
 
 do_notify(Len) ->
-    common_misc:send_mail(io_lib:format("mservice log queue too large :~p~n", [Len])).
+    ?ERROR_MSG("mservice log queue too large :~p~n", [Len]).
 
 do_write(Fd, Time, Type, Format, Args) ->
     {{Y,Mo,D},{H,Mi,S}} = Time, 

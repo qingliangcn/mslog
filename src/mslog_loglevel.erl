@@ -11,7 +11,7 @@
 
 -include("mslog.hrl").
 
--define(LOGMODULE, "common_logger").
+-define(LOGMODULE, "mslog_logger").
 
 %% Error levels:
 -define(LOG_LEVELS,[ {0, no_log, "No log"}
@@ -24,7 +24,7 @@
                     ]).
 
 get() ->
-    Level = common_logger:get(),
+    Level = mslog_logger:get(),
     case lists:keysearch(Level, 1, ?LOG_LEVELS) of
         {value, Result} -> Result;
         _ -> erlang:error({no_such_loglevel, Level})
@@ -33,7 +33,7 @@ get() ->
 get_all()->
     Nodes = [erlang:node()|erlang:nodes()],
     [begin
-         Result = rpc:call(Node, common_loglevel, get, []),
+         Result = rpc:call(Node, mslog_loglevel, get, []),
          io:format("=================================~n"),
          io:format("Get Node: ~w Loglevel, Result:~w~n", [Node, Result]),
          io:format("=================================~n")
@@ -43,7 +43,7 @@ get_all()->
 set_all(Loglevel) when is_integer(Loglevel) ->
     Nodes = [erlang:node()|erlang:nodes()],
     [begin
-         Result = rpc:call(Node, common_loglevel, set, [Loglevel]),
+         Result = rpc:call(Node, mslog_loglevel, set, [Loglevel]),
          io:format("=================================~n"),
          io:format("Set Node: ~w Loglevel, Result:~w~n", [Node, Result]),
          io:format("=================================~n")
@@ -55,7 +55,7 @@ set(LogLevel) when is_atom(LogLevel) ->
 
 set(Loglevel) when is_integer(Loglevel) ->
     try
-        {Mod,Code} = dynamic_compile:from_string(common_logger_src(Loglevel)),
+        {Mod,Code} = dynamic_compile:from_string(mslog_logger_src(Loglevel)),
         code:load_binary(Mod, ?LOGMODULE ++ ".erl", Code)
     catch
         Type:Error -> io:format("Error compiling logger (~p): ~p~n", [Type, Error])
@@ -75,9 +75,9 @@ level_to_integer(Level) ->
 %% Code of the common logger, dynamically compiled and loaded
 %% This allows to dynamically change log level while keeping a
 %% very efficient code.
-common_logger_src(Loglevel) ->
+mslog_logger_src(Loglevel) ->
     L = integer_to_list(Loglevel),
-    "-module(common_logger).
+    "-module(mslog_logger).
 
     -export([
 			debug_msg/5,
