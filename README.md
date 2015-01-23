@@ -21,7 +21,11 @@ or
 
 ## How to init
 
-just call mslog:set/2, mslog:set/3 or mslog:set/4
+add this code to you x_app.erl
+
+    -include("mslog.hrl").
+
+then just call mslog:set/2, mslog:set/3 or mslog:set/4
 
 for example:
 
