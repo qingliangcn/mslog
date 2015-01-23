@@ -137,24 +137,22 @@ do_notify(Len) ->
     ?ERROR_MSG("mservice log queue too large :~p~n", [Len]).
 
 do_write(Fd, Time, Type, Format, Args) ->
-    {{Y,Mo,D},{H,Mi,S}} = Time, 
-    LBin = erlang:iolist_to_binary(Type),
-    InfoMsg = unicode:characters_to_list(LBin),
+    {{Y,Mo,D},{H,Mi,S}} = Time,
     Time2 = io_lib:format("==== ~w-~.2.0w-~.2.0w ~.2.0w:~.2.0w:~.2.0w ===",
 		  [Y, Mo, D, H, Mi, S]),
-    L2 = lists:concat([InfoMsg, Time2]),
-    B = unicode:characters_to_binary(L2),
-    file:write_file(Fd, B, [append, delayed_write]),
-    try 
+    file:write_file(Fd, Type, [append, delayed_write]),
+    file:write_file(Fd, Time2, [append, delayed_write]),
+    %%try
         M = io_lib:format(Format, Args),
-        file:write_file(Fd, M, [append, delayed_write])
-    catch _:Error ->
-            io:format("log error ~p ~p ~p", [Error, Format, Args])
-    end.
+        file:write_file(Fd, M, [append, delayed_write]),
+    ok.
+    %%catch E:Error ->
+            %%io:format("log error ~p ~p ~p ~p", [E, Error, Format, Args])
+    %%end.
 
 % Copied from erlang_logger_file_h.erl
 write_event(Fd, {Time, {error, _GL, {_Pid, Format, Args}}}) ->
-    [L] = io_lib:format("~ts", ["错误报告"]),
+    [L] = io_lib:format("~s", ["ERROR: "]),
     do_write(Fd, Time, L, Format, Args);
 
 write_event(Fd, {Time, {emulator, _GL, Chars}}) ->
@@ -185,7 +183,7 @@ write_event(Fd, {Time, {info_report, _GL, {Pid, std_info, Rep}}}) ->
 
 
 write_event(Fd, {Time, {info_msg, _GL, {_Pid, Format, Args}}}) ->
-    [L] = io_lib:format("~ts", ["信息报告"]),
+    [L] = io_lib:format("~s", ["INFO REPORT"]),
     do_write(Fd, Time, L, Format, Args);
 
 write_event(Fd, {Time, {info_report, _GL, {_PID, progress, Detail}}}) ->
@@ -194,7 +192,7 @@ write_event(Fd, {Time, {info_report, _GL, {_PID, progress, Detail}}}) ->
 
 
 write_event(_, Info) ->
-    io:format("~ts ~p", ["未知的消息", Info]),
+    io:format("~ts: ~p", ["Unknow msg", Info]),
     ok.
 
 format_report(Rep) when is_list(Rep) ->
