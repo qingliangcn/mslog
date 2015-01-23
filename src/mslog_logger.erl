@@ -265,7 +265,7 @@ make_log_file(BaseDir, FileBaseName, IsMf) ->
 trucate_file_at_next_day() ->
     {{_, _, _Day}, {H, I, S}} = erlang:localtime(),
     Time = (23-H) * 3600 + ((59 - I) * 60 + (59 - S) + 2) * 1000,
-    erlang:send_after(Time, self(), trucate_file).
+    erlang:send_after(Time, self(), truncate_file).
 
 
 %%
