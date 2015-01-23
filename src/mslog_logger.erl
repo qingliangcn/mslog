@@ -142,13 +142,13 @@ do_write(Fd, Time, Type, Format, Args) ->
 		  [Y, Mo, D, H, Mi, S]),
     file:write_file(Fd, Type, [append, delayed_write]),
     file:write_file(Fd, Time2, [append, delayed_write]),
-    %%try
+    try
         M = io_lib:format(Format, Args),
         file:write_file(Fd, M, [append, delayed_write]),
-    ok.
-    %%catch E:Error ->
-            %%io:format("log error ~p ~p ~p ~p", [E, Error, Format, Args])
-    %%end.
+        ok
+    catch E:Error ->
+        io:format("log error ~p ~p ~p ~p", [E, Error, Format, Args])
+    end.
 
 % Copied from erlang_logger_file_h.erl
 write_event(Fd, {Time, {error, _GL, {_Pid, Format, Args}}}) ->
